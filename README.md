@@ -39,7 +39,7 @@ Password: Superuser2
 Password(again): Superuser2
 ```
 
-### Connecter le projet à Git
+###### Connecter le projet à Git
 Voir le MODULE GIT
 
 ### Configurer settings.py #########################################################################
