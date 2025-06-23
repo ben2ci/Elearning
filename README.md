@@ -1,18 +1,17 @@
-### Elearning
+## Elearning
 Projet Django nommé **Elearning**, développé avec Python 3.12 et Django<br>
 avec une base de données de MySQL (https://dev.mysql.com/downloads/installer/)
 Nous allons donc procéder comme suit:
-- Création du projet
-- Installer des dépendances MySQL
+- Création du projet, de Django Administration et Installer des dépendances MySQL
 - Configurer settings.py
 - Configurer MySQL
 - Ensuite developper notre programme avec l'ajout des fonctionnalité
 
-### Description
+## Description
 Ce projet a pour but de développer une plateforme de formation en ligne.  
 Il contient actuellement une application appelée `restaurant`.
 
-### Création du projet
+## Création du projet
 ```bash
 mkdir Elearning
 cd Elearning
@@ -30,9 +29,10 @@ py -3.12 -m venv .venv
 (.venv)python manage.py runserver localhost:9000
 ```
 
-### Création de Django Administration dans notre Projet
+###### Création de Django Administration dans notre Projet
 ```bash
-python manage.py createsuperuser
+(.venv)python manage.py migrate
+(.venv)python manage.py createsuperuser
 Username: ghostyrex
 Email: ghostyrex@gmail.com
 Password: Superuser2
@@ -43,7 +43,26 @@ Password(again): Superuser2
 Voir le MODULE GIT
 
 ### Configurer settings.py #########################################################################
+Allons dans settings.py pour ajouter l'application restaurant et configurer
+ les paramètres de connexions à notre Base de données et supprimons db.sqlite3:
+ ```bash
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'restaurant_db',
+        'USER': 'ghostyrex',
+        'PASSWORD': 'rootMysql@2210',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+```
 
+Faire ensuite migrer notre BD vers MySQL:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
 
 
 ### Retour dans le code de notre application
@@ -52,7 +71,8 @@ Avant de commmencer faison ceci:
 python manage.py migrate
 ```
 
-### Choisir la base de données MySQL
+*********************************************************************************************************************************
+### Télecharger, installer et configurer MySQL
 ```bash
 Télécharger MySql sur https://dev.mysql.com/downloads/
 Chercher MySQL installer for Windows et télécharger
@@ -68,11 +88,16 @@ Configurons notre mot de passe root:
 - User Name: root
 - Password: rootMysql@2210
 ```
-Pour vérifier que MySQL est bien installer et se onnecter à
-l'administrateur de notre base de données:
+###### Après installation de MySQL
+Il faut vérifier que MySQL est bien installer.
+Ouvrons une INVITE DE COMMANDE et tapons:
 ```bash
 mysql
 reponse: ERROR 1045 (28000): Access denied for user 'ODBC'@'localhost' (using password: NO)
+```
+###### Se connecter à MySQL
+Ouvrons une INVITE DE COMMANDE et tapons:
+```bash
 mysql -u ghostyrex -p
 Password: rootMysql@2210
 ...
@@ -82,28 +107,7 @@ mysql>use restaurant_db;
 mysql>sow tables;
 mysql>select * from restaurant_meal;
 ```
-Allons dans settings.py pour configurer les paramètres de connexions 
-à notre Base de données (voir DATABASES dans settings.py)
-Faire ensuite migrer notre BD vers MySQL:
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-
-### Insérons des données notre base de données de shell
-```bash
-python manage.py shell
->>>from restaurant.models import Meal
->>>Meal.objects.create(name="Meal One",description="This is our first meal", price="20")
->>>Meal.objects.all()
->>>meal = Meal.objects.create(name="Meal Two",description="This is our second meal", price="24")
->>>meal.save()
->>>Meal.objects.all()
-```
-
-
-
+*********************************************************************************************************************************
 ### MODULE GIT: Création du dépôt Git
 1. Aller sur ***https://github.com/dashboard*** et créer votre nouveau
 repository nommé Elearning
@@ -133,3 +137,26 @@ git push -u origin main
 git clone https://github.com/votre-utilisateur/elearning.git
 cd Elearning
 ```
+
+*********************************************************************************************************************************
+### ASTUCES
+###### PourInsérons des données notre base de données MySQL
+
+###### Avoir les informatons dans settings.py
+Ouvrez une INVITE DE COMMANDE et si vous souhaitez avoir les informations
+ sur les variable de votre settings.py voici comment procéder.
+```bash
+(.venv)python manage.py shell
+>>> from django.conf import settings
+>>> settings.BASE_DIR
+```
+###### PourInsérons des données notre base de données MySQL
+Ouvrez une INVITE DE COMMANDE et saisissez les commandes suivantes:
+```bash
+python manage.py shell
+>>>from restaurant.models import Meal
+>>>Meal.objects.create(name="Meal One",description="This is our first meal", price="20")
+>>>Meal.objects.all()
+>>>meal = Meal.objects.create(name="Meal Two",description="This is our second meal", price="24")
+>>>meal.save()
+>>>Meal.objects.all()
