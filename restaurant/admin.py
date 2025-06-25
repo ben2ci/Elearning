@@ -4,7 +4,7 @@ from .models import Meal
 
 @admin.register(Meal)
 class MealAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'price', 'available')
+    list_display = ('name', 'description', 'price', 'available', 'image')
 
     search_fields = ('name', 'description')
 

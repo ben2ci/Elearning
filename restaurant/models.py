@@ -13,6 +13,8 @@ class Meal(models.Model):
     # Stocke le prix du repas.
     price = models.DecimalField("Price ($)", max_digits=10, decimal_places=2)
 
+    image = models.ImageField(upload_to="meal_images", default="meal_images/default_meal.jpg")
+
     # Disponible stocke le booléen vrai ou faux selon que le repas est disponible en ligne.
     available = models.BooleanField("Online Availability", default=False)
 
