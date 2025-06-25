@@ -14,7 +14,10 @@ class Meal(models.Model):
     price = models.DecimalField("Price ($)", max_digits=10, decimal_places=2)
 
     # Disponible stocke le booléen vrai ou faux selon que le repas est disponible en ligne.
-    available = models.BooleanField("Online Availability", default=True)
+    available = models.BooleanField("Online Availability", default=False)
+
+    # Comptage des stocks : compte le nombre de repas restants.
+    stock = models.IntegerField("Stock Count", default=0)
 
     def __str__(self):
         return f"{self.description}"
